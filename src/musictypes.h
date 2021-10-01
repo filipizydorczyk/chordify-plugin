@@ -26,5 +26,5 @@ class Scale
 public:
     Scale(Sound key, MusicVariant variant) {}
     ~Scale() {}
-    std::vector<note_name> getChordByNote(Sound note) {}
+    std::vector<Sound> getChordByNote(Sound note) {}
 };
