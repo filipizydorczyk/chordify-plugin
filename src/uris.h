@@ -6,7 +6,7 @@
 #include "lv2/patch/patch.h"
 #include "lv2/urid/urid.h"
 
-#define EG_FIFTHS_URI "http://lv2plug.in/plugins/eg-fifths"
+#define EG_FIFTHS_URI "https://github.com/filipizydorczyk/chordify-plugin"
 
 typedef struct
 {

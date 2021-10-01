@@ -15,8 +15,8 @@ add_library(chrodify SHARED
     src/uris.h
 )
 
-configure_file(manifest/fifths.ttl build/chordify.lv2/fifths.ttl COPYONLY)
+configure_file(manifest/libchrodify.ttl build/chordify.lv2/libchrodify.ttl COPYONLY)
 configure_file(manifest/manifest.ttl.in build/chordify.lv2/manifest.ttl)
 
 set_target_properties(chrodify PROPERTIES ADDITIONAL_CLEAN_FILES
-        "build/chordify.lv2/fifths.ttl;build/chordify.lv2/manifest.ttl;")
+        "build/chordify.lv2/libchrodify.ttl;build/chordify.lv2/manifest.ttl;")

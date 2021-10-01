@@ -4,9 +4,9 @@
 @prefix urid:  <http://lv2plug.in/ns/ext/urid#> .
 @prefix midi:  <http://lv2plug.in/ns/ext/midi#> .
 
-<https://github.com/filipizydorczyk>
+<https://github.com/filipizydorczyk/chordify-plugin>
         a lv2:Plugin ;
-        doap:name "Example Fifths" ;
+        doap:name "Chordify Plugin" ;
         doap:license <http://opensource.org/licenses/isc> ;
         lv2:project <http://lv2plug.in/ns/lv2> ;
         lv2:requiredFeature urid:map ;
