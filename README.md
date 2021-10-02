@@ -11,7 +11,9 @@ cmake .
 make
 ```
 
-Then you should have direcotry `build/chordify.lv2`. When you paste this directory to any lv2 directory it should be dtected by host at the next start.
+Then you should have direcotry `build/chordify.lv2`. On linux there is post build command that also automaticly copy this directory to `~/.lv2` so that you can instantly test it at any host. You can also run script `./scripts/install-build.sh`.
+
+There is no windows scripts at the moment.
 
 Since I use **CMake** you should be able to go with any IDE and compiler.
 
