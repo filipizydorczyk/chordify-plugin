@@ -6,7 +6,7 @@
 #include "lv2/patch/patch.h"
 #include "lv2/urid/urid.h"
 
-#define EG_FIFTHS_URI "https://github.com/filipizydorczyk/chordify-plugin"
+#define CHORDIFY_URI "https://github.com/filipizydorczyk/chordify-plugin"
 
 typedef struct
 {
@@ -19,10 +19,10 @@ typedef struct
     LV2_URID patch_Set;
     LV2_URID patch_property;
     LV2_URID patch_value;
-} FifthsURIs;
+} ChordifyURIs;
 
 static inline void
-map_fifths_uris(LV2_URID_Map *map, FifthsURIs *uris)
+map_fifths_uris(LV2_URID_Map *map, ChordifyURIs *uris)
 {
     uris->atom_Path = map->map(map->handle, LV2_ATOM__Path);
     uris->atom_Resource = map->map(map->handle, LV2_ATOM__Resource);

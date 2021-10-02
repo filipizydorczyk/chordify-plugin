@@ -16,8 +16,8 @@
 
 enum
 {
-    FIFTHS_IN = 0,
-    FIFTHS_OUT = 1
+    CHORDIFY_INPUT = 0,
+    CHORDIFY_OUTPUT = 1
 };
 
 typedef struct
@@ -31,19 +31,19 @@ typedef struct
     LV2_Atom_Sequence *out_port;
 
     // URIs
-    FifthsURIs uris;
-} Fifths;
+    ChordifyURIs uris;
+} Chordify;
 
 static void
 connect_port(LV2_Handle instance, uint32_t port, void *data)
 {
-    Fifths *self = (Fifths *)instance;
+    Chordify *self = (Chordify *)instance;
     switch (port)
     {
-    case FIFTHS_IN:
+    case CHORDIFY_INPUT:
         self->in_port = (const LV2_Atom_Sequence *)data;
         break;
-    case FIFTHS_OUT:
+    case CHORDIFY_OUTPUT:
         self->out_port = (LV2_Atom_Sequence *)data;
         break;
     default:
@@ -58,7 +58,7 @@ instantiate(const LV2_Descriptor *descriptor,
             const LV2_Feature *const *features)
 {
     // Allocate and initialise instance structure.
-    Fifths *self = (Fifths *)calloc(1, sizeof(Fifths));
+    Chordify *self = (Chordify *)calloc(1, sizeof(Chordify));
     if (!self)
     {
         return NULL;
@@ -95,8 +95,8 @@ cleanup(LV2_Handle instance)
 static void
 run(LV2_Handle instance, uint32_t sample_count)
 {
-    Fifths *self = (Fifths *)instance;
-    FifthsURIs *uris = &self->uris;
+    Chordify *self = (Chordify *)instance;
+    ChordifyURIs *uris = &self->uris;
 
     // Struct for a 3 byte MIDI event, used for writing notes
     typedef struct
@@ -137,9 +137,9 @@ run(LV2_Handle instance, uint32_t sample_count)
                     fifth.event.body.type = ev->body.type;     // Same type
                     fifth.event.body.size = ev->body.size;     // Same size
 
-                    fifth.msg[0] = msg[0];     // Same status
-                    fifth.msg[1] = msg[1] + 7; // Pitch up 7 semitones
-                    fifth.msg[2] = msg[2];     // Same velocity
+                    fifth.msg[0] = msg[0];          // Same status
+                    fifth.msg[1] = msg[1] + 12;     // Pitch up 7 semitones
+                    fifth.msg[2] = msg[2] + 12 + 7; // Same velocity
 
                     // Write 5th event
                     lv2_atom_sequence_append_event(
@@ -161,7 +161,7 @@ extension_data(const char *uri)
     return NULL;
 }
 
-static const LV2_Descriptor descriptor = {EG_FIFTHS_URI,
+static const LV2_Descriptor descriptor = {CHORDIFY_URI,
                                           instantiate,
                                           connect_port,
                                           NULL, // activate,
