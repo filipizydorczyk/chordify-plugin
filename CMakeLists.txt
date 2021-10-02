@@ -5,8 +5,9 @@ project(chrodify VERSION 1.0.1 DESCRIPTION "Lv2 plugin to make chrods in scale b
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/build/chordify.lv2)
 
 add_library(chrodify SHARED
-    src/fifths.c
+    src/fifths.cpp
     src/uris.h
+    src/musictypes.h
 )
 
 if (WIN32)

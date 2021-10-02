@@ -1,3 +1,5 @@
+#include <vector>
+
 enum MusicVariant
 {
     MAJOR = 0,
@@ -24,7 +26,19 @@ enum Sound
 class Scale
 {
 public:
-    Scale(Sound key, MusicVariant variant) {}
+    Scale(Sound key, MusicVariant variant)
+    {
+        if (variant == MusicVariant::MAJOR)
+        {
+            this->sounds = {key, Sound::C};
+        }
+    }
     ~Scale() {}
-    std::vector<Sound> getChordByNote(Sound note) {}
+    std::vector<Sound> getChordByNote(Sound note)
+    {
+        return this->sounds;
+    }
+
+private:
+    std::vector<Sound> sounds;
 };

@@ -1,4 +1,5 @@
 #include "./uris.h"
+#include "./musictypes.h"
 
 #include "lv2/atom/atom.h"
 #include "lv2/atom/util.h"
@@ -22,6 +23,9 @@ enum
 
 typedef struct
 {
+    // Music structures
+    Scale *scale;
+
     // Features
     LV2_URID_Map *map;
     LV2_Log_Logger logger;
@@ -83,6 +87,8 @@ instantiate(const LV2_Descriptor *descriptor,
 
     map_fifths_uris(self->map, &self->uris);
 
+    self->scale = new Scale(Sound::C, MusicVariant::MAJOR);
+
     return (LV2_Handle)self;
 }
 
@@ -137,9 +143,9 @@ run(LV2_Handle instance, uint32_t sample_count)
                     fifth.event.body.type = ev->body.type;     // Same type
                     fifth.event.body.size = ev->body.size;     // Same size
 
-                    fifth.msg[0] = msg[0];          // Same status
-                    fifth.msg[1] = msg[1] + 12;     // Pitch up 7 semitones
-                    fifth.msg[2] = msg[2] + 12 + 7; // Same velocity
+                    fifth.msg[0] = msg[0];                                            // Same status
+                    fifth.msg[1] = msg[1] + self->scale->getChordByNote(Sound::A)[0]; // Pitch up 7 semitones
+                    fifth.msg[2] = msg[2] + 12 + 7;                                   // Same velocity
 
                     // Write 5th event
                     lv2_atom_sequence_append_event(
