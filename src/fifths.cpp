@@ -135,21 +135,25 @@ run(LV2_Handle instance, uint32_t sample_count)
 
                 if (msg[1] <= 127 - 7)
                 {
-                    // Make a note one 5th (7 semitones) higher than input
-                    MIDINoteEvent fifth;
 
-                    // Could simply do fifth.event = *ev here instead...
-                    fifth.event.time.frames = ev->time.frames; // Same time
-                    fifth.event.body.type = ev->body.type;     // Same type
-                    fifth.event.body.size = ev->body.size;     // Same size
+                    for (int i = 0; i < 2; i++)
+                    {
+                        // Make a note one 5th (7 semitones) higher than input
+                        MIDINoteEvent fifth;
 
-                    fifth.msg[0] = msg[0];                                            // Same status
-                    fifth.msg[1] = msg[1] + self->scale->getChordByNote(Sound::A)[0]; // Pitch up 7 semitones
-                    fifth.msg[2] = msg[2] + 12 + 7;                                   // Same velocity
+                        // Could simply do fifth.event = *ev here instead...
+                        fifth.event.time.frames = ev->time.frames; // Same time
+                        fifth.event.body.type = ev->body.type;     // Same type
+                        fifth.event.body.size = ev->body.size;     // Same size
 
-                    // Write 5th event
-                    lv2_atom_sequence_append_event(
-                        self->out_port, out_capacity, &fifth.event);
+                        fifth.msg[0] = msg[0];                                                     // Same status
+                        fifth.msg[1] = msg[1] + 12 + self->scale->getChordByNote(Sound::A)[i + 1]; // Pitch up 7 semitones
+                        fifth.msg[2] = msg[2];                                                     // Same velocity
+
+                        // Write 5th event
+                        lv2_atom_sequence_append_event(
+                            self->out_port, out_capacity, &fifth.event);
+                    }
                 }
                 break;
             default:

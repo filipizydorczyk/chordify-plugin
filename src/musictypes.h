@@ -20,7 +20,6 @@ enum Sound
     A = 9,
     AIS = 10,
     B = 11,
-
 };
 
 class Scale
@@ -30,13 +29,20 @@ public:
     {
         if (variant == MusicVariant::MAJOR)
         {
-            this->sounds = {key, Sound::C};
+            this->sounds = {
+                key,
+                static_cast<Sound>(key + 2),
+                static_cast<Sound>(key + 4),
+                static_cast<Sound>(key + 5),
+                static_cast<Sound>(key + 7),
+                static_cast<Sound>(key + 9),
+                static_cast<Sound>(key + 11)};
         }
     }
     ~Scale() {}
     std::vector<Sound> getChordByNote(Sound note)
     {
-        return this->sounds;
+        return {sounds.at(0), sounds.at(2), sounds.at(4)};
     }
 
 private:
