@@ -25,3 +25,5 @@ Since I use **CMake** you should be able to go with any IDE and compiler.
 -   [ ] add UI
 -   [ ] test on windows
 -   [ ] update gitignore for diffrent possible IDEs
+-   [ ] code refactor (naming convetion, changing to pointers etc.)
+-   [ ] add bypassing created output
