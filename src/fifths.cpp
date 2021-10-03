@@ -146,9 +146,9 @@ run(LV2_Handle instance, uint32_t sample_count)
                         fifth.event.body.type = ev->body.type;     // Same type
                         fifth.event.body.size = ev->body.size;     // Same size
 
-                        fifth.msg[0] = msg[0];          // Same status
-                        fifth.msg[1] = msg[1] + 12 + x; // Pitch up 7 semitones
-                        fifth.msg[2] = msg[2];          // Same velocity
+                        fifth.msg[0] = msg[0]; // Same status
+                        fifth.msg[1] = 48 + x; // Pitch up 7 semitones
+                        fifth.msg[2] = msg[2]; // Same velocity
 
                         // Write 5th event
                         lv2_atom_sequence_append_event(

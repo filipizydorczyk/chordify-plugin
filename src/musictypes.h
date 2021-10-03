@@ -42,7 +42,7 @@ public:
     ~Scale() {}
     std::vector<Sound> getChordByNote(Sound note)
     {
-        return {sounds.at(2), sounds.at(4)};
+        return {sounds.at(0), sounds.at(2), sounds.at(4)};
     }
 
 private:
