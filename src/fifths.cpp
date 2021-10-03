@@ -136,7 +136,7 @@ run(LV2_Handle instance, uint32_t sample_count)
                 if (msg[1] <= 127 - 7)
                 {
 
-                    for (int i = 0; i < 2; i++)
+                    for (auto &x : self->scale->getChordByNote(Sound::A))
                     {
                         // Make a note one 5th (7 semitones) higher than input
                         MIDINoteEvent fifth;
@@ -146,9 +146,9 @@ run(LV2_Handle instance, uint32_t sample_count)
                         fifth.event.body.type = ev->body.type;     // Same type
                         fifth.event.body.size = ev->body.size;     // Same size
 
-                        fifth.msg[0] = msg[0];                                                     // Same status
-                        fifth.msg[1] = msg[1] + 12 + self->scale->getChordByNote(Sound::A)[i + 1]; // Pitch up 7 semitones
-                        fifth.msg[2] = msg[2];                                                     // Same velocity
+                        fifth.msg[0] = msg[0];          // Same status
+                        fifth.msg[1] = msg[1] + 12 + x; // Pitch up 7 semitones
+                        fifth.msg[2] = msg[2];          // Same velocity
 
                         // Write 5th event
                         lv2_atom_sequence_append_event(
