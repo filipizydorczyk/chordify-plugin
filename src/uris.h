@@ -22,7 +22,7 @@ typedef struct
 } ChordifyURIs;
 
 static inline void
-map_fifths_uris(LV2_URID_Map *map, ChordifyURIs *uris)
+map_chordify_uris(LV2_URID_Map *map, ChordifyURIs *uris)
 {
     uris->atom_Path = map->map(map->handle, LV2_ATOM__Path);
     uris->atom_Resource = map->map(map->handle, LV2_ATOM__Resource);
@@ -35,4 +35,4 @@ map_fifths_uris(LV2_URID_Map *map, ChordifyURIs *uris)
     uris->patch_value = map->map(map->handle, LV2_PATCH__value);
 }
 
-#endif /* FIFTHS_URIS_H */
+#endif

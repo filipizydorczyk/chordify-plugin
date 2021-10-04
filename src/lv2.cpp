@@ -85,7 +85,7 @@ instantiate(const LV2_Descriptor *descriptor,
         return NULL;
     }
 
-    map_fifths_uris(self->map, &self->uris);
+    map_chordify_uris(self->map, &self->uris);
 
     self->scale = new Scale(Sound::C, MusicVariant::MAJOR);
 
@@ -104,7 +104,6 @@ run(LV2_Handle instance, uint32_t sample_count)
     Chordify *self = (Chordify *)instance;
     ChordifyURIs *uris = &self->uris;
 
-    // Struct for a 3 byte MIDI event, used for writing notes
     typedef struct
     {
         LV2_Atom_Event event;
@@ -120,7 +119,6 @@ run(LV2_Handle instance, uint32_t sample_count)
     lv2_atom_sequence_clear(self->out_port);
     self->out_port->atom.type = self->in_port->atom.type;
 
-    // Read incoming events
     LV2_ATOM_SEQUENCE_FOREACH(self->in_port, ev)
     {
         if (ev->body.type == uris->midi_Event)
@@ -130,34 +128,32 @@ run(LV2_Handle instance, uint32_t sample_count)
             {
             case LV2_MIDI_MSG_NOTE_ON:
             case LV2_MIDI_MSG_NOTE_OFF:
-                // Forward note to output
                 lv2_atom_sequence_append_event(self->out_port, out_capacity, ev);
 
                 if (msg[1] <= 127 - 7)
                 {
 
-                    for (auto &x : self->scale->getChordByNote(Sound::A))
+                    for (
+                        auto &x :
+                        self->scale->getChordByNote(
+                            static_cast<Sound>(msg[2] % 12)))
                     {
-                        // Make a note one 5th (7 semitones) higher than input
-                        MIDINoteEvent fifth;
+                        MIDINoteEvent interval;
 
-                        // Could simply do fifth.event = *ev here instead...
-                        fifth.event.time.frames = ev->time.frames; // Same time
-                        fifth.event.body.type = ev->body.type;     // Same type
-                        fifth.event.body.size = ev->body.size;     // Same size
+                        interval.event.time.frames = ev->time.frames; // Same time
+                        interval.event.body.type = ev->body.type;     // Same type
+                        interval.event.body.size = ev->body.size;     // Same size
 
-                        fifth.msg[0] = msg[0]; // Same status
-                        fifth.msg[1] = 48 + x; // Pitch up 7 semitones
-                        fifth.msg[2] = msg[2]; // Same velocity
+                        interval.msg[0] = msg[0]; // Same status
+                        interval.msg[1] = 48 + x; // Pitch up 7 semitones
+                        interval.msg[2] = msg[2]; // Same velocity
 
-                        // Write 5th event
                         lv2_atom_sequence_append_event(
-                            self->out_port, out_capacity, &fifth.event);
+                            self->out_port, out_capacity, &interval.event);
                     }
                 }
                 break;
             default:
-                // Forward all other MIDI events directly
                 lv2_atom_sequence_append_event(self->out_port, out_capacity, ev);
                 break;
             }
