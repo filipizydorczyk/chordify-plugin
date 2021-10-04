@@ -1,4 +1,5 @@
 #include <vector>
+#include <algorithm>
 
 enum MusicVariant
 {
@@ -22,6 +23,21 @@ enum Sound
     B = 11,
 };
 
+static int get_index(std::vector<Sound> v, Sound K)
+{
+    auto it = std::find(v.begin(), v.end(), K);
+
+    if (it != v.end())
+    {
+        int index = it - v.begin();
+        return index;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 class Scale
 {
 public:
@@ -40,12 +56,16 @@ public:
         }
     }
     ~Scale() {}
+
     std::vector<int> get_chord_by_note(Sound note, int octave)
     {
+
+        int index = get_index(sounds, note);
+
         return {
-            sounds.at(0) + (octave + 1) * 12,
-            sounds.at(2) + (octave + 1) * 12,
-            sounds.at(4) + (octave + 1) * 12};
+            sounds.at(index         % 7) + (octave + 1) * 12,
+            sounds.at((index + 2)   % 7) + (octave + 1) * 12,
+            sounds.at((index + 4)   % 7) + (octave + 1) * 12};
     }
 
 private:

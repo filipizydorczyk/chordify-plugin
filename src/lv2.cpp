@@ -141,13 +141,13 @@ run(LV2_Handle instance, uint32_t sample_count)
                     {
                         MIDINoteEvent interval;
 
-                        interval.event.time.frames = ev->time.frames; // Same time
-                        interval.event.body.type = ev->body.type;     // Same type
-                        interval.event.body.size = ev->body.size;     // Same size
+                        interval.event.time.frames = ev->time.frames;
+                        interval.event.body.type = ev->body.type;
+                        interval.event.body.size = ev->body.size;
 
-                        interval.msg[0] = msg[0]; // Same status
-                        interval.msg[1] = x;      // Pitch up 7 semitones
-                        interval.msg[2] = msg[2]; // Same velocity
+                        interval.msg[0] = msg[0];
+                        interval.msg[1] = x;
+                        interval.msg[2] = msg[2];
 
                         lv2_atom_sequence_append_event(
                             self->out_port, out_capacity, &interval.event);
