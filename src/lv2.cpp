@@ -6,7 +6,6 @@
 #include "lv2/core/lv2.h"
 #include "lv2/core/lv2_util.h"
 #include "lv2/log/log.h"
-#include "lv2/log/logger.h"
 #include "lv2/midi/midi.h"
 #include "lv2/urid/urid.h"
 
@@ -23,18 +22,13 @@ enum
 
 typedef struct
 {
-    // Music structures
     Scale *scale;
 
-    // Features
     LV2_URID_Map *map;
-    LV2_Log_Logger logger;
 
-    // Ports
     const LV2_Atom_Sequence *in_port;
     LV2_Atom_Sequence *out_port;
 
-    // URIs
     ChordifyURIs uris;
 } Chordify;
 
@@ -72,18 +66,8 @@ instantiate(const LV2_Descriptor *descriptor,
     // clang-format off
   const char*  missing = lv2_features_query(
     features,
-    LV2_LOG__log,  &self->logger.log, false,
     LV2_URID__map, &self->map,        true,
     NULL);
-    // clang-format on
-
-    lv2_log_logger_set_map(&self->logger, self->map);
-    if (missing)
-    {
-        lv2_log_error(&self->logger, "Missing feature <%s>\n", missing);
-        free(self);
-        return NULL;
-    }
 
     map_chordify_uris(self->map, &self->uris);
 

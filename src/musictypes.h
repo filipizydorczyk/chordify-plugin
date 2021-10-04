@@ -32,10 +32,7 @@ static int get_index(std::vector<Sound> v, Sound K)
         int index = it - v.begin();
         return index;
     }
-    else
-    {
-        return 0;
-    }
+    return 0;
 }
 
 class Scale
