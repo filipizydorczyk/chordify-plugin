@@ -135,7 +135,7 @@ run(LV2_Handle instance, uint32_t sample_count)
 
                     for (
                         auto &x :
-                        self->scale->getChordByNote(
+                        self->scale->get_chord_by_note(
                             static_cast<Sound>(msg[2] % 12)))
                     {
                         MIDINoteEvent interval;

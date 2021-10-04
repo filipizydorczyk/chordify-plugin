@@ -40,7 +40,7 @@ public:
         }
     }
     ~Scale() {}
-    std::vector<Sound> getChordByNote(Sound note)
+    std::vector<Sound> get_chord_by_note(Sound note)
     {
         return {sounds.at(0), sounds.at(2), sounds.at(4)};
     }
