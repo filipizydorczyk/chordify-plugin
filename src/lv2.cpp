@@ -136,7 +136,8 @@ run(LV2_Handle instance, uint32_t sample_count)
                     for (
                         auto &x :
                         self->scale->get_chord_by_note(
-                            static_cast<Sound>(msg[2] % 12)))
+                            static_cast<Sound>(msg[1] % 12),
+                            msg[1] / 12))
                     {
                         MIDINoteEvent interval;
 
@@ -145,7 +146,7 @@ run(LV2_Handle instance, uint32_t sample_count)
                         interval.event.body.size = ev->body.size;     // Same size
 
                         interval.msg[0] = msg[0]; // Same status
-                        interval.msg[1] = 48 + x; // Pitch up 7 semitones
+                        interval.msg[1] = x;      // Pitch up 7 semitones
                         interval.msg[2] = msg[2]; // Same velocity
 
                         lv2_atom_sequence_append_event(

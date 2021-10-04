@@ -40,9 +40,12 @@ public:
         }
     }
     ~Scale() {}
-    std::vector<Sound> get_chord_by_note(Sound note)
+    std::vector<int> get_chord_by_note(Sound note, int octave)
     {
-        return {sounds.at(0), sounds.at(2), sounds.at(4)};
+        return {
+            sounds.at(0) + (octave + 1) * 12,
+            sounds.at(2) + (octave + 1) * 12,
+            sounds.at(4) + (octave + 1) * 12};
     }
 
 private:

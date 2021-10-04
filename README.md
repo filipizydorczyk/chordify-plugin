@@ -29,3 +29,4 @@ Since I use **CMake** you should be able to go with any IDE and compiler.
 -   [ ] add bypassing created output
 -   [ ] figure out what `FIFTHS_URIS_H` define is used for
 -   [ ] decide if I still need fetaures that are used
+-   [ ] make sure notes are not going out of octave
