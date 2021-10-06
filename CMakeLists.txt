@@ -8,6 +8,7 @@ add_library(chrodify SHARED
     src/lv2.cpp
     src/uris.h
     src/musictypes.h
+    src/musictypes.cpp
 )
 
 if (WIN32)
