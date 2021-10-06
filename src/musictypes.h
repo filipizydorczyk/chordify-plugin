@@ -1,13 +1,13 @@
 #include <vector>
 #include <algorithm>
 
-enum MusicVariant
+enum MusicVariant : uint8_t
 {
     MAJOR = 0,
     MINOR = 1
 };
 
-enum Sound
+enum Sound : uint8_t
 {
     C = 0,
     CIS = 1,
@@ -23,13 +23,13 @@ enum Sound
     B = 11,
 };
 
-static int get_index(std::vector<Sound> v, Sound K)
+static int8_t get_index(std::vector<Sound> v, Sound K)
 {
     auto it = std::find(v.begin(), v.end(), K);
 
     if (it != v.end())
     {
-        int index = it - v.begin();
+        int8_t index = it - v.begin();
         return index;
     }
     return 0;
@@ -42,7 +42,7 @@ public:
     {
         if (variant == MusicVariant::MAJOR)
         {
-            this->sounds = {
+            this->m_Sounds = {
                 key,
                 static_cast<Sound>(key + 2),
                 static_cast<Sound>(key + 4),
@@ -54,17 +54,18 @@ public:
     }
     ~Scale() {}
 
-    std::vector<int> get_chord_by_note(Sound note, int octave)
+    std::vector<int8_t> get_chord_by_note(Sound note, int8_t octave)
     {
 
-        int index = get_index(sounds, note);
+        int8_t index = get_index(m_Sounds, note);
 
         return {
-            sounds.at(index         % 7) + (octave + 1) * 12,
-            sounds.at((index + 2)   % 7) + (octave + 1) * 12,
-            sounds.at((index + 4)   % 7) + (octave + 1) * 12};
+            //I am actually not sure if plain int wasn't better
+            static_cast<int8_t>(m_Sounds.at(index % 7) + (octave + 1) * 12),
+            static_cast<int8_t>(m_Sounds.at((index + 2) % 7) + (octave + 1) * 12),
+            static_cast<int8_t>(m_Sounds.at((index + 4) % 7) + (octave + 1) * 12)};
     }
 
 private:
-    std::vector<Sound> sounds;
+    std::vector<Sound> m_Sounds;
 };
