@@ -26,7 +26,6 @@ Since I use **CMake** you should be able to go with any IDE and compiler.
 -   [ ] test on windows
 -   [ ] update gitignore for diffrent possible IDEs
 -   [ ] code refactor (naming convetion, changing to pointers etc.)
--   [ ] add bypassing created output
 -   [ ] figure out what `FIFTHS_URIS_H` define is used for
 -   [x] decide if I still need fetaures that are used
 -   [ ] make sure notes are not going out of octave
