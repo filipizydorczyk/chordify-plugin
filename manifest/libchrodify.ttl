@@ -3,6 +3,9 @@
 @prefix lv2:   <http://lv2plug.in/ns/lv2core#> .
 @prefix urid:  <http://lv2plug.in/ns/ext/urid#> .
 @prefix midi:  <http://lv2plug.in/ns/ext/midi#> .
+@prefix units: <http://lv2plug.in/ns/extensions/units#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 
 <https://github.com/filipizydorczyk/chordify-plugin>
         a lv2:Plugin ;
@@ -27,4 +30,27 @@
                 lv2:index 1 ;
                 lv2:symbol "out" ;
                 lv2:name "Out"
-        ] .
+        ] ,
+        [
+                a lv2:InputPort ,
+                        lv2:ControlPort ;
+                lv2:index 2 ;
+                lv2:symbol "key" ;
+                lv2:name "Key" ;
+                lv2:default 12.0 ;
+                lv2:minimum 12.0 ;
+                lv2:maximum 24.0 ;
+                units:unit units:midiNote ;
+                lv2:scalePoint [
+                        rdfs:label "+1" ;
+                        rdf:value 1.0
+                ] , [
+                        rdfs:label "0" ;
+                        rdf:value 0.0
+                ] , [
+                        rdfs:label "-1" ;
+                        rdf:value -1.0
+                ]
+        ] 
+        
+        .

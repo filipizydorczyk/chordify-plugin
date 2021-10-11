@@ -17,7 +17,8 @@
 enum
 {
     CHORDIFY_INPUT = 0,
-    CHORDIFY_OUTPUT = 1
+    CHORDIFY_OUTPUT = 1,
+    CHORDIFY_ROOT_NOTE = 2
 };
 
 typedef struct
@@ -28,6 +29,7 @@ typedef struct
 
     const LV2_Atom_Sequence *in_port;
     LV2_Atom_Sequence *out_port;
+    const uint8_t *note;
 
     ChordifyURIs uris;
 } Chordify;
@@ -43,6 +45,9 @@ connect_port(LV2_Handle instance, uint32_t port, void *data)
         break;
     case CHORDIFY_OUTPUT:
         self->out_port = (LV2_Atom_Sequence *)data;
+        break;
+    case CHORDIFY_ROOT_NOTE:
+        self->note = (const uint8_t *)data;
         break;
     default:
         break;
