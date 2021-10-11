@@ -22,7 +22,7 @@ enum
 
 typedef struct
 {
-    Scale *scale;
+    musictypes::Scale *scale;
 
     LV2_URID_Map *map;
 
@@ -71,7 +71,7 @@ instantiate(const LV2_Descriptor *descriptor,
 
     map_chordify_uris(self->map, &self->uris);
 
-    self->scale = new Scale(Sound::C, MusicVariant::MAJOR);
+    self->scale = new musictypes::Scale(musictypes::Sound::C, musictypes::MusicVariant::MAJOR);
 
     return (LV2_Handle)self;
 }
@@ -120,7 +120,7 @@ run(LV2_Handle instance, uint32_t sample_count)
                     for (
                         auto &x :
                         self->scale->get_chord_by_note(
-                            static_cast<Sound>(msg[1] % 12),
+                            static_cast<musictypes::Sound>(msg[1] % 12),
                             msg[1] / 12))
                     {
                         MIDINoteEvent interval;
